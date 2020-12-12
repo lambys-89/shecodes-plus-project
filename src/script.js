@@ -200,6 +200,54 @@ if (mins < 10) {
   mins = `0${mins}`;
 };
 
+Let weatherCodes = [
+  {
+    code: "01d",
+    imgRef: "fas fa-sun",
+    background: "media/01d - vid.mp4"
+  },
+  {
+    code: "02d",
+    imgRef: "fas fa-cloud-sun",
+    background: "media/02d - vid.mp4"
+  },
+  {
+    code: "03d",
+    imgRef: "fas fa-cloud",
+    background: "media/03d - vid.mp4"
+  },
+  {
+    code: "04d",
+    imgRef: "fas fa-cloud",
+    background: "media/04d - vid.mp4"
+  },
+  {
+    code: "09d",
+    imgRef: "fas fa-cloud-showers-heavy",
+    background: "media/01d - vid.mp4"
+    },
+  {
+    code: "10d",
+    imgRef: "fas fa-cloud-showers-heavy",
+    background: "media/10d - vid.mp4"
+  },
+  {
+    code: "11d",
+    imgRef: "fas fa-bolt",
+    background: "media/11d - vid.mp4"
+  },
+  {
+    code: "13d",
+    imgRef: "fas fa-snowflake",
+    background: "media/13d - vid.mp4"
+  },
+  {
+    code: "50d",
+    imgRef: "fas fa-smog",
+    background: "media/50d - vid.mp4"
+  }
+]
+
 window.addEventListener("load", currGeoLoc);
 
 let dateField = document.querySelector("#current-date-time");
