@@ -7,7 +7,6 @@ function properCase(inputVal) {
 
 function displayDeets(apiCall) {
   let getTemp = apiCall;
-  console.log(getTemp);
   let country = getTemp.data.sys.country;
   let temp = Math.round(getTemp.data.main.temp);
   let descriptionCurrent = properCase(getTemp.data.weather[0].description);
@@ -16,7 +15,6 @@ function displayDeets(apiCall) {
   let wind = Math.round(getTemp.data.wind.speed);
   let cityName = getTemp.data.name;
   let weatherCode = getTemp.data.weather[0].icon;
-  console.log(weatherCode);
   if (weatherCode.substr(2,1) === "n") {
     weatherCode = weatherCode.substr(0,2)+"d";
   };
@@ -36,7 +34,6 @@ function displayDeets(apiCall) {
   backgroundVid.src = `media/${weatherCode}-vid.mp4`;
 }
 
-
 function getDeets(lat, long) {
   let latitude = lat;
   let longitude = long;
@@ -45,7 +42,18 @@ function getDeets(lat, long) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`;
   //const axios = require("axios").default;
 
-  axios.get(apiUrl).then(displayDeets);
+fetch(apiUrl)
+   .then(function (response) {
+      if(!response.ok) {
+        throw Error(`City ${response.statusText}`);
+   } else {
+     axios.get(apiUrl).then(displayDeets);
+   };
+  })
+   .catch(function(err) {
+     console.log(err);
+     alert(`City not found, please try again.`);
+   });
 }
 
 function getDeetsCity(city) {
@@ -54,8 +62,21 @@ function getDeetsCity(city) {
   let units = "metric";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${citySearch}&units=${units}&appid=${apiKey}`;
   //const axios = require("axios").default;
-
-  axios.get(apiUrl).then(displayDeets);
+  
+  
+   fetch(apiUrl)
+   .then(function (response) {
+      if(!response.ok) {
+        throw Error(`City ${response.statusText}`);
+   } else {
+     console.log("how am I getting here?");
+     axios.get(apiUrl).then(displayDeets);
+   };
+  })
+   .catch(function(err) {
+     console.log(err);
+     alert(`City not found, please try again.`);
+   });
 }
 
 
@@ -77,8 +98,8 @@ function searchEngine(event) {
   } else {
   let cityInputProper = properCase(cityInput);
 
-  let h1City = document.querySelector("#h1-city-name");
-  h1City.innerHTML = `${cityInputProper}`;
+  //let h1City = document.querySelector("#h1-city-name");
+  //h1City.innerHTML = `${cityInputProper}`;
 
   let cityInputApi = cityInput.replace(" ", "+");
 
@@ -99,8 +120,8 @@ function searchEngine(event) {
   } else {
   let cityInputProper = properCase(cityInput);
 
-  let h1City = document.querySelector("#h1-city-name");
-  h1City.innerHTML = `${cityInputProper}`;
+  //let h1City = document.querySelector("#h1-city-name");
+  //h1City.innerHTML = `${cityInputProper}`;
 
   let cityInputApi = cityInput.replace(" ", "+");
 
