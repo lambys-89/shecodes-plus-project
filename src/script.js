@@ -6,7 +6,6 @@ function properCase(inputVal) {
 }
 
 function displayDeets(apiCall) {
-  console.log(apiCall);
   let getTemp = apiCall;
   let country = getTemp.data.sys.country;
   let temp = Math.round(getTemp.data.main.temp);
@@ -15,6 +14,10 @@ function displayDeets(apiCall) {
   let hum = getTemp.data.main.humidity;
   let wind = Math.round(getTemp.data.wind.speed);
   let cityName = getTemp.data.name;
+  let weatherCode = getTemp.weather.icon;
+  if (weatherCode.substr(2,1) === "n") {
+    weatherCode = weatherCode.substr(0,2)+"d";
+  };
   let h1 = document.querySelector("h1");
   h1.innerHTML = `${cityName}, ${country}`;
   let weatherCurrentTemp = document.querySelector(".temp");
@@ -27,6 +30,8 @@ function displayDeets(apiCall) {
   weatherCurrentHum.innerHTML = `Humidity: ${hum}%`;
   let weatherCurrentWind = document.querySelector(".wind");
   weatherCurrentWind.innerHTML = `Wind speed: ${wind}mph`;
+  let backgroundVid = document.querySelector("video");
+  backgroundVid.src = `media/${weatherCode} - vid.mp4`;
 }
 
 
@@ -62,9 +67,6 @@ function currentLocation(response) {
 
 function searchEngine(event) {
   event.preventDefault();
-
-  console.log("Into searchEngine");
-
   
   let cityInput = document.querySelector("#city-input").value;
   let cityInputProper = properCase(cityInput);
@@ -77,11 +79,7 @@ function searchEngine(event) {
   getDeetsCity(cityInputApi);
 
   document.querySelector("#city-input").value = "";
-  //Google Maps API
-  //let googleApiKey = "AIzaSyAMHk00LwlJeA6obr1FUfcsrBrtZysF8pU";
-  //let googleApiWeb = `https://www.google.com/maps/embed/v1/place?key=${googleApiKey}&q=${cityInputGoogle}`;
-
-}
+  }
 
 function currGeoLoc(event) {
   event.preventDefault();
@@ -195,55 +193,6 @@ let months = [
   "December"
 ];
 month = months[month];
-
-let codes = [
-  {
-    code: "01d",
-    imgRef: "fas fa-sun",
-    background: "media/01d - vid.mp4"
-  },
-  {
-    code: "02d",
-    imgRef: "fas fa-cloud-sun",
-    background: "media/02d - vid.mp4"
-  },
-  {
-    code: "03d",
-    imgRef: "fas fa-cloud",
-    background: "media/03d - vid.mp4"
-  },
-  {
-    code: "04d",
-    imgRef: "fas fa-cloud",
-    background: "media/04d - vid.mp4"
-  },
-  {
-    code: "09d",
-    imgRef: "fas fa-cloud-showers-heavy",
-    background: "media/01d - vid.mp4"
-    },
-  {
-    code: "10d",
-    imgRef: "fas fa-cloud-showers-heavy",
-    background: "media/10d - vid.mp4"
-  },
-  {
-    code: "11d",
-    imgRef: "fas fa-bolt",
-    background: "media/11d - vid.mp4"
-  },
-  {
-    code: "13d",
-    imgRef: "fas fa-snowflake",
-    background: "media/13d - vid.mp4"
-  },
-  {
-    code: "50d",
-    imgRef: "fas fa-smog",
-    background: "media/50d - vid.mp4"
-  }
-];
-
 
 if (mins < 10) {
   mins = `0${mins}`;
