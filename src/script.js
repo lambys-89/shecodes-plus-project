@@ -7,6 +7,7 @@ function properCase(inputVal) {
 
 function displayDeets(apiCall) {
   let getTemp = apiCall;
+  console.log(getTemp);
   let country = getTemp.data.sys.country;
   let temp = Math.round(getTemp.data.main.temp);
   let descriptionCurrent = properCase(getTemp.data.weather[0].description);
@@ -14,7 +15,8 @@ function displayDeets(apiCall) {
   let hum = getTemp.data.main.humidity;
   let wind = Math.round(getTemp.data.wind.speed);
   let cityName = getTemp.data.name;
-  let weatherCode = getTemp.weather.icon;
+  let weatherCode = getTemp.data.weather[0].icon;
+  console.log(weatherCode);
   if (weatherCode.substr(2,1) === "n") {
     weatherCode = weatherCode.substr(0,2)+"d";
   };
@@ -31,7 +33,7 @@ function displayDeets(apiCall) {
   let weatherCurrentWind = document.querySelector(".wind");
   weatherCurrentWind.innerHTML = `Wind speed: ${wind}mph`;
   let backgroundVid = document.querySelector("video");
-  backgroundVid.src = `media/${weatherCode} - vid.mp4`;
+  backgroundVid.src = `media/${weatherCode}-vid.mp4`;
 }
 
 
@@ -67,8 +69,12 @@ function currentLocation(response) {
 
 function searchEngine(event) {
   event.preventDefault();
-  
+
   let cityInput = document.querySelector("#city-input").value;
+  
+  if (cityInput === "") {
+    alert("Please enter a city or place name.");
+  } else {
   let cityInputProper = properCase(cityInput);
 
   let h1City = document.querySelector("#h1-city-name");
@@ -79,7 +85,36 @@ function searchEngine(event) {
   getDeetsCity(cityInputApi);
 
   document.querySelector("#city-input").value = "";
-  }
+  };
+}
+
+  function searchEngineEnter(event) {
+
+  switch (event.key) {
+    case "Enter":
+
+  let cityInput = document.querySelector("#city-input").value;
+  if (cityInput === "") {
+    alert("Please enter a city or place name.");
+  } else {
+  let cityInputProper = properCase(cityInput);
+
+  let h1City = document.querySelector("#h1-city-name");
+  h1City.innerHTML = `${cityInputProper}`;
+
+  let cityInputApi = cityInput.replace(" ", "+");
+
+  getDeetsCity(cityInputApi);
+
+  document.querySelector("#city-input").value = "";
+  };
+  break;
+
+  default:
+    return;
+    };
+    event.preventDefault();
+}
 
 function currGeoLoc(event) {
   event.preventDefault();
@@ -199,6 +234,8 @@ if (mins < 10) {
 };
 
 window.addEventListener("load", currGeoLoc);
+
+window.addEventListener("keydown", searchEngineEnter);
 
 let dateField = document.querySelector("#current-date-time");
 dateField.innerHTML = `${day} ${dateNow}${dateApend} ${month} ${year} ${hour}:${mins}${mornAft}`;
