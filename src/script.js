@@ -196,11 +196,7 @@ let months = [
 ];
 month = months[month];
 
-if (mins < 10) {
-  mins = `0${mins}`;
-};
-
-Let weatherCodes = [
+let codes = [
   {
     code: "01d",
     imgRef: "fas fa-sun",
@@ -246,7 +242,12 @@ Let weatherCodes = [
     imgRef: "fas fa-smog",
     background: "media/50d - vid.mp4"
   }
-]
+];
+
+
+if (mins < 10) {
+  mins = `0${mins}`;
+};
 
 window.addEventListener("load", currGeoLoc);
 
