@@ -1,3 +1,4 @@
+//Capitalise first letter of first word
 function properCase(inputVal) {
   let firstLetter = inputVal.substring(0, 1).toUpperCase();
   let theRest = inputVal.substring(1, (inputVal.length + 1));
@@ -5,8 +6,11 @@ function properCase(inputVal) {
   return inputVal;
 }
 
+
+//Updating the details displayed on the page including images 
 function displayDeets(apiCall) {
   let getTemp = apiCall;
+  console.log(getTemp);
   let country = getTemp.data.sys.country;
   let temp = Math.round(getTemp.data.main.temp);
   let descriptionCurrent = properCase(getTemp.data.weather[0].description);
@@ -18,8 +22,96 @@ function displayDeets(apiCall) {
   if (weatherCode.substr(2,1) === "n") {
     weatherCode = weatherCode.substr(0,2)+"d";
   };
+  
+
+  //updating timestamp
+  let timezone = getTemp.data.timezone;
+  console.log(timezone);
+
+  Date.prototype.addSecs = function(s) {
+    this.setTime(this.getTime() + (s * 1000));
+    return this;
+  }
+
+  let newDate = new Date();
+  newDate.addSecs(timezone);
+  console.log(newDate);
+
+  let newDay = newDate.getDay();
+  let newHour = newDate.getHours();
+  let newMins = newDate.getMinutes();
+  let newYear = newDate.getFullYear();
+  let newDateNow = newDate.getDate();
+  let newMonth = newDate.getMonth();
+  let newDateApend = "th";
+  let newMornAft = "AM";
+
+
+//Working out correct ending for utc date based on numeric value
+//(defaults to "th" this updates where needed)
+if (newDateNow === 1 || newDateNow === 21 || newDateNow === 31) {
+  newDateApend = "st";
+} else {
+  if (newDateNow === 2 || newDateNow === 22) {
+    newDateApend = "nd";
+  } else {
+    if (newDateNow === 3 || newDateNow === 22) {
+      newDateApend = "rd";
+    }
+  }
+}
+
+
+//Check if afternoon
+if (newHour >= 12) {
+  newMornAft = "PM";
+}
+
+
+//array of days to be used to convert API numeric val to words
+let days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wesnesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
+newDay = days[newDay];
+
+//array of months to be used to convert API numeric val to words
+let months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+newMonth = months[newMonth];
+
+
+// formatting for time stamp so mins < 10 start with 0
+if (newMins < 10) {
+  newMins = `0${newMins}`;
+};
+
+
+  //updating city name
   let h1 = document.querySelector("h1");
   h1.innerHTML = `${cityName}, ${country}`;
+
+let newDateField = document.querySelector("#current-date-time");
+newDateField.innerHTML = `${newDay} ${newDateNow}${newDateApend} ${newMonth} ${newYear} ${newHour}:${newMins}${newMornAft}`;
+
+  //updating details
   let weatherCurrentTemp = document.querySelector(".temp");
   weatherCurrentTemp.innerHTML = `Currently: ${temp}°C`;
   let weatherCurrentDesc = document.querySelector(".type");
@@ -69,12 +161,17 @@ function displayDeets(apiCall) {
 currentWeatherImg.classList.replace(currentWeatherImg.className.substr(4, currentWeatherImg.className.length), currentWeatherImgNew);
 }
 
+
+
+//Processes API call when searching by currentlocation lat/long
+//Error handling if city is unrecognised by API
 function getDeets(lat, long) {
   let latitude = lat;
   let longitude = long;
   let apiKey = "d4005dcd287a291e84d25dc6afec0b1c";
   let units = "metric";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`;
+  //Included as in training ids but not recognised when run so commented out
   //const axios = require("axios").default;
 
 fetch(apiUrl)
@@ -91,11 +188,15 @@ fetch(apiUrl)
    });
 }
 
+
+//Processes API call when searching by city name
+//Error handling if city is unrecognised by API
 function getDeetsCity(city) {
   let citySearch = city;
   let apiKey = "d4005dcd287a291e84d25dc6afec0b1c";
   let units = "metric";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${citySearch}&units=${units}&appid=${apiKey}`;
+  //Included as in training ids but not recognised when run so commented out
   //const axios = require("axios").default;
   
   
@@ -104,7 +205,6 @@ function getDeetsCity(city) {
       if(!response.ok) {
         throw Error(`City ${response.statusText}`);
    } else {
-     console.log("how am I getting here?");
      axios.get(apiUrl).then(displayDeets);
    };
   })
@@ -115,6 +215,8 @@ function getDeetsCity(city) {
 }
 
 
+
+//Gets latitude and longitude of current location of user
 function currentLocation(response) {
   let lat = response.coords.latitude;
   let long = response.coords.longitude;
@@ -123,6 +225,9 @@ function currentLocation(response) {
   getDeets(lat, long);
 }
 
+
+
+//Search engine - search button event to search
 function searchEngine(event) {
   event.preventDefault();
 
@@ -144,6 +249,9 @@ function searchEngine(event) {
   };
 }
 
+
+
+//Search engine - enter key event to search
   function searchEngineEnter(event) {
 
   switch (event.key) {
@@ -232,6 +340,10 @@ function measureChangeCel() {
   weatherTempFeelsCel.innerHTML = `Feels like: ${currentTempFeels}°C`;
 }
 
+
+
+
+//Getting and formatting details based on user's system info
 let dateTimeNow = new Date();
 let day = dateTimeNow.getDay();
 let hour = dateTimeNow.getHours();
@@ -241,7 +353,11 @@ let dateNow = dateTimeNow.getDate();
 let month = dateTimeNow.getMonth();
 let dateApend = "th";
 let mornAft = "AM";
+ 
 
+
+//Working out correct ending for date based on numeric value
+//(defaults to "th" this updates where needed)
 if (dateNow === 1 || dateNow === 21 || dateNow === 31) {
   dateApend = "st";
 } else {
@@ -254,10 +370,14 @@ if (dateNow === 1 || dateNow === 21 || dateNow === 31) {
   }
 }
 
+
+//Check if afternoon
 if (hour >= 12) {
   mornAft = "PM";
 }
 
+
+//array of days to be used to convert API numeric val to words
 let days = [
   "Sunday",
   "Monday",
@@ -269,6 +389,7 @@ let days = [
 ];
 day = days[day];
 
+//array of months to be used to convert API numeric val to words
 let months = [
   "January",
   "February",
@@ -285,16 +406,19 @@ let months = [
 ];
 month = months[month];
 
+
+// formatting for time stamp so mins < 10 start with 0
 if (mins < 10) {
   mins = `0${mins}`;
 };
 
+
+
+//Event listeners for load, enter on search, click search, click current location,
+// change to farenheit, change to celsius
 window.addEventListener("load", currGeoLoc);
 
 window.addEventListener("keydown", searchEngineEnter);
-
-let dateField = document.querySelector("#current-date-time");
-dateField.innerHTML = `${day} ${dateNow}${dateApend} ${month} ${year} ${hour}:${mins}${mornAft}`;
 
 let citySearchForm = document.querySelector("#city-search"); 
 citySearchForm.addEventListener("click", searchEngine);
@@ -308,5 +432,8 @@ radioCel.addEventListener("change", measureChangeCel);
 let radioFar = document.querySelector("#farenheit-select");
 radioFar.addEventListener("change", measureChangeFar);
 
+//Updating current date and time of user
+let dateField = document.querySelector("#current-date-time");
+dateField.innerHTML = `${day} ${dateNow}${dateApend} ${month} ${year} ${hour}:${mins}${mornAft}`;
 
 
