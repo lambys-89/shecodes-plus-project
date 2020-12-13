@@ -91,6 +91,7 @@ function currGeoLoc(event) {
     return;
     };
     event.preventDefault();
+
 }
 ////////////////////////////NEW FUNCTION///////////////////////////////////////
 
@@ -240,6 +241,18 @@ function displayDeets(apiCall) {
   if (weatherCode.substr(2,1) === "n") {
     weatherCode = weatherCode.substr(0,2)+"d";
   };
+  
+  let centigradeSelect = document.querySelector("#centigrade-select");
+  centigradeSelect.setAttribute("checked", true);
+
+  let centigradeLabel = document.querySelector("#cent-label");
+  centigradeLabel.classList.add("active");
+
+  let farLabel = document.querySelector("#far-label");
+  farLabel.classList.remove("active");
+
+  let farenheitSelect = document.querySelector("#farenheit-select");
+  farenheitSelect.removeAttribute("checked");
   
 
   //updating timestamp
@@ -524,6 +537,72 @@ function measureChangeFar() {
   currentTempFeels = Math.round((currentTempFeels * (9/5))+32);
   let weatherTempFeelsFar = document.querySelector(".feels");
   weatherTempFeelsFar.innerHTML = `Feels like: ${currentTempFeels}°F`;
+
+  //Day 1 forecast to farenheit
+  let day1TempDesc = document.querySelector("#day-1-max-min").innerHTML;
+  console.log(day1TempDesc);
+  let slashLoc = day1TempDesc.search("/");
+
+  let day1Min = day1TempDesc.substr(0, slashLoc-2);
+  day1Min = Math.round((day1Min * (9/5))+32);
+  
+  let day1Max = day1TempDesc.substring(slashLoc+1, ((day1TempDesc.length)-2));
+  day1Max = Math.round((day1Max * (9/5))+32);
+
+  let day1TempUpdate = document.querySelector("#day-1-max-min");
+  day1TempUpdate.innerHTML = `${day1Min}°F/${day1Max}°F`;
+
+  //Day 2 forecast to farenheit
+  let day2TempDesc = document.querySelector("#day-2-max-min").innerHTML;
+  let slashLoc2 = day2TempDesc.search("/");
+
+  let day2Min = day2TempDesc.substr(0, slashLoc2-2);
+  day2Min = Math.round((day2Min * (9/5))+32);
+  
+  let day2Max = day2TempDesc.substring(slashLoc2+1, ((day2TempDesc.length)-2));
+  day2Max = Math.round((day2Max * (9/5))+32);
+
+  let day2TempUpdate = document.querySelector("#day-2-max-min");
+  day2TempUpdate.innerHTML = `${day2Min}°F/${day2Max}°F`;
+
+  //Day 3 forecast to farenheit
+  let day3TempDesc = document.querySelector("#day-3-max-min").innerHTML;
+  let slashLoc3 = day3TempDesc.search("/");
+
+  let day3Min = day3TempDesc.substr(0, slashLoc3-2);
+  day3Min = Math.round((day3Min * (9/5))+32);
+  
+  let day3Max = day3TempDesc.substring(slashLoc3+1, ((day3TempDesc.length)-2));
+  day3Max = Math.round((day3Max * (9/5))+32);
+
+  let day3TempUpdate = document.querySelector("#day-3-max-min");
+  day3TempUpdate.innerHTML = `${day3Min}°F/${day3Max}°F`;
+
+  //Day 4 forecast to farenheit
+  let day4TempDesc = document.querySelector("#day-4-max-min").innerHTML;
+  let slashLoc4 = day4TempDesc.search("/");
+
+  let day4Min = day4TempDesc.substr(0, slashLoc4-2);
+  day4Min = Math.round((day4Min * (9/5))+32);
+  
+  let day4Max = day4TempDesc.substring(slashLoc4+1, ((day4TempDesc.length)-2));
+  day4Max = Math.round((day4Max * (9/5))+32);
+
+  let day4TempUpdate = document.querySelector("#day-4-max-min");
+  day4TempUpdate.innerHTML = `${day4Min}°F/${day4Max}°F`;
+
+  //Day 5 forecast to farenheit
+  let day5TempDesc = document.querySelector("#day-5-max-min").innerHTML;
+  let slashLoc5 = day5TempDesc.search("/");
+
+  let day5Min = day5TempDesc.substr(0, slashLoc5-2);
+  day5Min = Math.round((day5Min * (9/5))+32);
+  
+  let day5Max = day5TempDesc.substring(slashLoc5+1, ((day5TempDesc.length)-2));
+  day5Max = Math.round((day5Max * (9/5))+32);
+
+  let day5TempUpdate = document.querySelector("#day-5-max-min");
+  day5TempUpdate.innerHTML = `${day5Min}°F/${day5Max}°F`;
 }
 ////////////////////////////NEW FUNCTION///////////////////////////////////////
 function measureChangeCel() {
@@ -551,6 +630,74 @@ function measureChangeCel() {
   currentTempFeels = Math.round((currentTempFeels - 32)*(5/9));
   let weatherTempFeelsCel = document.querySelector(".feels");
   weatherTempFeelsCel.innerHTML = `Feels like: ${currentTempFeels}°C`;
+
+    //Day 1 forecast to celsius
+  let day1TempDesc = document.querySelector("#day-1-max-min").innerHTML;
+  console.log(day1TempDesc);
+  let slashLoc = day1TempDesc.search("/");
+
+  let day1Min = day1TempDesc.substr(0, slashLoc-2);
+  day1Min = Math.round((day1Min - 32)*(5/9));;
+  
+  let day1Max = day1TempDesc.substring(slashLoc+1, ((day1TempDesc.length)-2));
+  day1Max = Math.round((day1Max - 32)*(5/9));
+
+  let day1TempUpdate = document.querySelector("#day-1-max-min");
+  day1TempUpdate.innerHTML = `${day1Min}°C/${day1Max}°C`;
+
+  //Day 2 forecast to celsius
+  let day2TempDesc = document.querySelector("#day-2-max-min").innerHTML;
+  let slashLoc2 = day2TempDesc.search("/");
+
+  let day2Min = day2TempDesc.substr(0, slashLoc2-2);
+  day2Min = Math.round((day2Min - 32)*(5/9));;
+  
+  let day2Max = day2TempDesc.substring(slashLoc2+1, ((day2TempDesc.length)-2));
+  day2Max = Math.round((day2Max - 32)*(5/9));
+
+  let day2TempUpdate = document.querySelector("#day-2-max-min");
+  day2TempUpdate.innerHTML = `${day2Min}°C/${day2Max}°C`;
+
+  //Day 3 forecast to celsius
+  let day3TempDesc = document.querySelector("#day-3-max-min").innerHTML;
+  let slashLoc3 = day3TempDesc.search("/");
+
+  let day3Min = day3TempDesc.substr(0, slashLoc3-2);
+  day3Min = Math.round((day3Min - 32)*(5/9));
+  
+  let day3Max = day3TempDesc.substring(slashLoc3+1, ((day3TempDesc.length)-2));
+  day3Max = Math.round((day3Max - 32)*(5/9));
+
+  let day3TempUpdate = document.querySelector("#day-3-max-min");
+  day3TempUpdate.innerHTML = `${day3Min}°C/${day3Max}°C`;
+
+  //Day 4 forecast to celsius
+  let day4TempDesc = document.querySelector("#day-4-max-min").innerHTML;
+  let slashLoc4 = day4TempDesc.search("/");
+
+  let day4Min = day4TempDesc.substr(0, slashLoc4-2);
+  day4Min = Math.round((day4Min - 32)*(5/9));;
+  
+  let day4Max = day4TempDesc.substring(slashLoc4+1, ((day4TempDesc.length)-2));
+  day4Max = Math.round((day4Max - 32)*(5/9));
+
+  let day4TempUpdate = document.querySelector("#day-4-max-min");
+  day4TempUpdate.innerHTML = `${day4Min}°C/${day4Max}°C`;
+
+  //Day 5 forecast to celsius
+  let day5TempDesc = document.querySelector("#day-5-max-min").innerHTML;
+  let slashLoc5 = day5TempDesc.search("/");
+
+  let day5Min = day5TempDesc.substr(0, slashLoc5-2);
+  day5Min = Math.round((day5Min - 32)*(5/9));
+  
+  let day5Max = day5TempDesc.substring(slashLoc5+1, ((day5TempDesc.length)-2));
+  day5Max = Math.round((day5Max - 32)*(5/9));
+
+  let day5TempUpdate = document.querySelector("#day-5-max-min");
+  day5TempUpdate.innerHTML = `${day5Min}°C/${day5Max}°C`;
+
+
 }
 
 

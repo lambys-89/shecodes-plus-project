@@ -67,7 +67,7 @@ h2.date-time {
 }
 
 il.weather-details {
-  font-size: 14px;
+  font-size: 18px;
   color: black;
   font-weight: bold;
 }
@@ -78,16 +78,21 @@ i {
 
 #current-weather-img {
   font-size: 140px;
+  padding-left: 30px !important;
+}
+
+#day-1-img,
+#day-2-img,
+#day-3-img,
+#day-4-img,
+#day-5-img {
+  font-size: 80px;
 }
 
 .weather-list {
   padding-top: 20px;
   padding-bottom: 30px;
   vertical-align: middle;
-}
-
-.weather-icon-current {
-  padding-left: 30px !important;
 }
 
 .row2a,
@@ -191,7 +196,7 @@ h2.date-time {
 }
 
 il.weather-details {
-  font-size: 14px;
+  font-size: 18px;
   color: black;
   font-weight: bold;
 }
@@ -209,6 +214,9 @@ i {
 
 .weather-icon-current {
   padding-left: 30px !important;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  vertical-align: middle;
 }
 
 .row2a,
