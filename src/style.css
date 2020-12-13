@@ -50,8 +50,7 @@ input#city-input.form-control.city-search:focus {
 }
 
 #current-weather-img {
-  font-size: 120px !important;
-  padding-left: 30px !important;
+  max-width: 100% !;
 }
 
 #day-1-img,
@@ -123,11 +122,12 @@ i {
   vertical-align: middle;
 }
 
-.weather-icon-current {
+div.col-sm-3.weather-icon-current {
   padding-left: 30px !important;
   padding-top: 20px;
   padding-bottom: 30px;
   vertical-align: middle;
+  max-width: 300px !important;
 }
 
 .card-img-top {
