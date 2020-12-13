@@ -296,7 +296,7 @@ function displayDeets(apiCall) {
     "Sunday",
     "Monday",
     "Tuesday",
-    "Wesnesday",
+    "Wednesday",
    "Thursday",
    "Friday",
    "Saturday"
@@ -708,7 +708,7 @@ let days = [
   "Sunday",
   "Monday",
   "Tuesday",
-  "Wesnesday",
+  "Wednesday",
   "Thursday",
   "Friday",
   "Saturday"
