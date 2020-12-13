@@ -14,43 +14,33 @@ video.background-vid {
 .container {
   display: block;
   margin: 0 auto;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 div.row2 {
-  height: 300px;
+  padding-top: 30px;
 }
 
 .row {
   padding-top: 20px;
 }
 
-.row2 {
-  padding-top: 30px;
+#temp-col {
+  justify-content: end !important;
 }
 
-div.col-6.map {
-  padding-right: 30px;
+.v-align {
+  height: 20%;
 }
 
-button.btn-primary,
-label.btn-secondary {
-  color: Black;
-  background-color: #ced4da;
-  border: 1px solid black;
+.v-align2,
+.v-align3 {
+  height: 35%;
 }
 
-button.btn-primary:hover,
-label.btn-secondary:hover {
-  color: Black;
-  background-color: transparent;
-  border: 1px solid black;
-}
-
-button.btn-primary:focus {
-  color: Black !important;
-  background-color: transparent !important;
-  border: 1px solid #ced4da !important;
-  box-shadow: none !important;
+.row3 {
+  padding-top: 50px;
 }
 
 input#city-input.form-control.city-search:focus {
@@ -59,31 +49,8 @@ input#city-input.form-control.city-search:focus {
   box-shadow: 0 0 1px black !important;
 }
 
-h1 {
-  color: black;
-}
-
-div.row-date-time {
-  padding-top: 0px;
-}
-
-h2.date-time {
-  font-size: 16px;
-  color: black;
-}
-
-il.weather-details {
-  font-size: 18px;
-  color: black;
-  font-weight: bold;
-}
-
-i {
-  color: white;
-}
-
 #current-weather-img {
-  font-size: 140px;
+  font-size: 120px !important;
   padding-left: 30px !important;
 }
 
@@ -95,71 +62,14 @@ i {
   font-size: 80px;
 }
 
-.weather-list {
-  padding-top: 20px;
-  padding-bottom: 30px;
-  vertical-align: middle;
-}
-
 .row2a,
 .row2b,
 .row2c {
   padding-left: 20px;
 }
-.card-img-top {
-  height: 75px;
-  max-width: 90px;
-  opacity: 80%;
-  filter: grayscale(10%);
-}
-
-.card-body {
-  display: block;
-  margin: 0 auto;
-}
 
 .card {
   background-color: rgba(108, 110, 112, 0.85) !important;
-}
-
-h5,
-p {
-  color: black;
-  text-align: center;
-  font-weight: bold;
-}
-video.background-vid {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: -1;
-  filter: grayscale(100%);
-  opacity: 60%;
-}
-
-.container {
-  display: block;
-  margin: 0 auto;
-}
-
-div.row2 {
-  height: 300px;
-}
-
-.row {
-  padding-top: 20px;
-}
-
-.row2 {
-  padding-top: 30px;
-}
-
-div.col-6.map {
-  padding-right: 30px;
 }
 
 button.btn-primary,
@@ -220,11 +130,6 @@ i {
   vertical-align: middle;
 }
 
-.row2a,
-.row2b,
-.row2c {
-  padding-left: 20px;
-}
 .card-img-top {
   height: 75px;
   max-width: 90px;
@@ -237,26 +142,11 @@ i {
   margin: 0 auto;
 }
 
-.card {
-  background-color: rgba(108, 110, 112, 0.85) !important;
-}
-
 h5,
 p {
   color: black;
   text-align: center;
   font-weight: bold;
-}
-
-.fa-location-arrow {
-  display: inline-block;
-  height: 24px;
-  color: black;
-  font-size: 1rem;
-  border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  margin: 0;
 }
 
 .fa-location-arrow {

@@ -15,111 +15,113 @@
 <body>
     <div class="container">
         <video class="background-vid" autoplay muted loop src="media/Placeholder - vid.mp4"></video>
-        <form id="city-search-form">
-            <div class="row row1">
-                <div class="col-4">
+        <div class="row v-align row1">
+            <form id="city-search-form">
+                <div class="col">
                     <div class="form-group">
                         <input type="text" class="form-control city-search" id="city-input"
                             placeholder="Enter city here...">
                     </div>
-        </form>
-    </div>
-    <div class="col-7">
-        <button type="submit" class="btn btn-primary loc-search search" id="curr-location"><i
-                class="fas fa-location-arrow"></i></button>
-        <button type="submit" class="btn btn-primary search" id="city-search">Search</button>
-    </div>
-    <div class="col-1">
-        <div id="measure-select" class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label id="cent-label" class="btn btn-secondary centigrade float-right active">
-                <input type="radio" name="options" class="measure float-right" id="centigrade-select" checked> °C
-            </label>
-            <label id="far-label" class="btn btn-secondary farenheit float-right">
-                <input type="radio" name="options" class="measure float-right" id="farenheit-select"> °F
-            </label>
-        </div>
-    </div>
-    </div>
-    </form>
-
-    <div class="row row2">
-        <div class="col-6">
-            <div class="row row2a">
-                <div class="col">
-                    <h1 id="h1-city-name">London, UK</h1>
                 </div>
+            </form>
+            <div class="col">
+                <button type="submit" class="btn btn-primary loc-search search" id="curr-location"><i
+                    class="fas fa-location-arrow"></i></button>
+                <button type="submit" class="btn btn-primary search" id="city-search">Search</button>
             </div>
-            <div class="row row2b row-date-time">
-                <div class="col">
-                    <h2 class="date-time" id="current-date-time"></h2>
-                </div>
-            </div>
-            <div class="row row2c">
-                <div class="col-5 weather-icon-current">
-                    <i id="current-weather-img" class="fas fa-cloud-sun-rain"></i>
-                </div>
-                <div class="col-7 weather-list">
-                    <ul class="list-group">
-                        <il class="weather-details temp">Currently:</il>
-                        <il class="weather-details feels">Feels like:</il>
-                        <il class="weather-details type">Type</il>
-                        <il class="weather-details hum">Humidity:</il>
-                        <il class="weather-details wind">Wind speed:</il>
-                    </ul>
+            <div id="temp-col" class="col-1">
+                <div id="measure-select" class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label id="cent-label" class="btn btn-secondary centigrade float-right active">
+                        <input type="radio" name="options" class="measure float-right" id="centigrade-select" checked> °C
+                    </label>
+                    <label id="far-label" class="btn btn-secondary farenheit float-right">
+                        <input type="radio" name="options" class="measure float-right" id="farenheit-select"> °F
+                    </label>
                 </div>
             </div>
         </div>
-    </div>
 
-    <br />
-    <br />
-    <br />
-
-    <div class="row row3">
-        <div class="col-12">
-            <div class="card-group">
-                <div class="card day1">
-                    <div class="card-body">
-                        <h5 id="day-1-title" class="card-title">Monday</h5>
-                        <i id="day-1-img" class="fas fa-cloud-sun-rain"></i>
-                        <p id="day-1-max-min"class="card-text">6°C/12°C</p>
+        <div class="row v-align2 row2">
+            <div class="col-sm">
+                <div class="row v-align2a row2a">
+                    <div class="col-sm">
+                        <h1 id="h1-city-name">London, UK</h1>
                     </div>
                 </div>
-                <div class="card day2">
-                    <div class="card-body">
-                        <h5 id="day-2-title" class="card-title">Tuesday</h5>
-                        <i id="day-2-img" class="fas fa-cloud-sun-rain"></i>
-                        <p id="day-2-max-min" class="card-text">9°C/16°C</p>
+                <div class="row v-align2b row2b row-date-time">
+                    <div class="col-sm">
+                        <h2 class="date-time" id="current-date-time"></h2>
                     </div>
                 </div>
-                <div class="card day3">
-                    <div class="card-body">
-                        <h5 id="day-3-title" class="card-title">Wednesday</h5>
-                        <i id="day-3-img" class="fas fa-cloud-sun-rain"></i>
-                        <p id="day-3-max-min" class="card-text">11°C/18°C</p>
+                <div class="row v-align2c row2c">
+                    <div class="col-sm-3 weather-icon-current">
+                        <i id="current-weather-img" class="fas fa-cloud-sun-rain"></i>
                     </div>
-                </div>
-                <div class="card day4">
-                    <div class="card-body">
-                        <h5 id="day-4-title" class="card-title">Thursday</h5>
-                        <i id="day-4-img" class="fas fa-cloud-sun-rain"></i>
-                        <p id="day-4-max-min" class="card-text">7°C/10°C</p>
-                    </div>
-                </div>
-                <div class="card day5">
-                    <div class="card-body">
-                        <h5 id="day-5-title" class="card-title">Friday</h5>
-                        <i id="day-5-img" class="fas fa-cloud-sun-rain"></i>
-                        <p id="day-5-max-min" class="card-text">4°C/7°C</p>
+                    <div class="col-sm weather-list">
+                        <ul class="list-group">
+                            <il class="weather-details temp">Currently:</il>
+                            <il class="weather-details feels">Feels like:</il>
+                            <il class="weather-details type">Type</il>
+                            <il class="weather-details hum">Humidity:</il>
+                            <il class="weather-details wind">Wind speed:</il>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <div class="row v-align3 row3">
+            <div class="col-12">
+                <h1 class="forecast-header">5 Day Forecast</h1>
+            </div>
+        </div>
+        <div class="row row4">
+            <div class="col-sm-12">
+                <div class="card-group">
+                    <div class="card day1">
+                        <div class="card-body">
+                            <h5 id="day-1-title" class="card-title">Monday</h5>
+                            <i id="day-1-img" class="fas fa-cloud-sun-rain"></i>
+                            <p id="day-1-max-min"class="card-text">6°C/12°C</p>
+                        </div>
+                    </div>
+                    <div class="card day2">
+                        <div class="card-body">
+                            <h5 id="day-2-title" class="card-title">Tuesday</h5>
+                            <i id="day-2-img" class="fas fa-cloud-sun-rain"></i>
+                            <p id="day-2-max-min" class="card-text">9°C/16°C</p>
+                        </div>
+                    </div>
+                    <div class="card day3">
+                        <div class="card-body">
+                            <h5 id="day-3-title" class="card-title">Wednesday</h5>
+                            <i id="day-3-img" class="fas fa-cloud-sun-rain"></i>
+                            <p id="day-3-max-min" class="card-text">11°C/18°C</p>
+                        </div>
+                    </div>
+                    <div class="card day4">
+                        <div class="card-body">
+                            <h5 id="day-4-title" class="card-title">Thursday</h5>
+                            <i id="day-4-img" class="fas fa-cloud-sun-rain"></i>
+                            <p id="day-4-max-min" class="card-text">7°C/10°C</p>
+                        </div>
+                    </div>
+                    <div class="card day5">
+                        <div class="card-body">
+                            <h5 id="day-5-title" class="card-title">Friday</h5>
+                            <i id="day-5-img" class="fas fa-cloud-sun-rain"></i>
+                            <p id="day-5-max-min" class="card-text">4°C/7°C</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <p class="open-source-code">
+            <a href="https://github.com/lambys-89/shecodes-plus-project">Open-source code</a> by Sarah Lamb
+        </p>
     </div>
-    </div>
-    <p class="open-source-code">
-        <a href="https://github.com/lambys-89/shecodes-plus-project">Open-source code</a> by Sarah Lamb
-    </p>
+</div>
     <script src="src/script.js"></script>
 </body>
 
