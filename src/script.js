@@ -7,7 +7,225 @@ function properCase(inputVal) {
 }
 
 
-//Updating the details displayed on the page including images 
+
+////NEW FUNCTION////
+//Get wetaher icon for weather code
+function weatherIcon(weatherId) {
+    let currentWeatherImgNew = "fa-cloud-sun-rain";
+
+  switch (weatherId) {
+    case "01d":
+        currentWeatherImgNew = "fa-sun";
+        break;
+    case "02d":
+        currentWeatherImgNew = "fa-cloud-sun";
+        break;
+    case "03d":
+        currentWeatherImgNew = "fa-cloud";
+        break;
+    case "04d":
+        currentWeatherImgNew = "fa-cloud";
+        break;
+    case "09d":
+        currentWeatherImgNew = "fa-cloud-showers-heavy";
+        break;
+    case "10d":
+        currentWeatherImgNew = "fa-cloud-showers-heavy";
+        break;
+    case "11d":
+        currentWeatherImgNew = "fa-bolt";
+        break;
+    case "13d":
+        currentWeatherImgNew = "fa-snowflake";
+        break;
+    case "50d":
+        currentWeatherImgNew = "fa-smog";
+        break;
+    default: 
+        currentWeatherImgNew = "fa-cloud-sun-rain";
+  }
+return currentWeatherImgNew
+}
+
+
+
+
+//////////////////////////GETTING LOCATION/////////////////////////////////////
+////////////////////////////NEW FUNCTION///////////////////////////////////////
+//Current Geo Location
+function currGeoLoc(event) {
+  event.preventDefault();
+
+  navigator.geolocation.getCurrentPosition(currentLocation);
+
+}
+////////////////////////////NEW FUNCTION///////////////////////////////////////
+
+
+
+
+//Search engine - enter key event to search
+  function searchEngineEnter(event) {
+
+  switch (event.key) {
+    case "Enter":
+
+  let cityInput = document.querySelector("#city-input").value;
+  if (cityInput === "") {
+    alert("Please enter a city or place name.");
+  } else {
+  let cityInputProper = properCase(cityInput);
+
+  //let h1City = document.querySelector("#h1-city-name");
+  //h1City.innerHTML = `${cityInputProper}`;
+
+  let cityInputApi = cityInput.replace(" ", "+");
+
+  getDeetsCity(cityInputApi);
+
+  document.querySelector("#city-input").value = "";
+  };
+  break;
+
+  default:
+    return;
+    };
+    event.preventDefault();
+}
+////////////////////////////NEW FUNCTION///////////////////////////////////////
+
+
+
+
+//Search engine - search button event to search
+function searchEngine(event) {
+  event.preventDefault();
+
+  let cityInput = document.querySelector("#city-input").value;
+  
+  if (cityInput === "") {
+    alert("Please enter a city or place name.");
+  } else {
+  //let cityInputProper = properCase(cityInput);
+  //let h1City = document.querySelector("#h1-city-name");
+  //h1City.innerHTML = `${cityInputProper}`;
+
+  let cityInputApi = cityInput.replace(" ", "+");
+
+  getDeetsCity(cityInputApi);
+
+  document.querySelector("#city-input").value = "";
+  };
+}
+
+
+
+
+
+
+
+////////////////////////CREATING API CALLS/////////////////////////////////////
+////////////////////////////NEW FUNCTION///////////////////////////////////////
+//Gets latitude and longitude of current location of user
+function currentLocation(response) {
+  let lat = response.coords.latitude;
+  let long = response.coords.longitude;
+  console.log(response);
+
+  getDeets(lat, long);
+}
+////////////////////////////NEW FUNCTION///////////////////////////////////////
+//Processes API call when searching by currentlocation lat/long
+//Error handling if city is unrecognised by API
+function getDeets(lat, long) {
+  let latitude = lat;
+  let longitude = long;
+  let apiKey = "d4005dcd287a291e84d25dc6afec0b1c";
+  let units = "metric";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`;
+  
+  let futureApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=current,minutely,hourly,alerts&units=${units}&appid=${apiKey}`;
+  //Included as in training ids but not recognised when run so commented out
+  //const axios = require("axios").default;
+
+fetch(apiUrl)
+   .then(function (response) {
+      if(!response.ok) {
+        throw Error(`City ${response.statusText}`);
+   } else {
+     axios.get(apiUrl).then(displayDeets);
+     axios.get(futureApiUrl).then(displayDeetsFuture);
+   };
+  })
+   .catch(function(err) {
+     console.log(err);
+     alert(`City not found, please try again.`);
+   });
+}
+////////////////////////////NEW FUNCTION///////////////////////////////////////
+//Processes API call when searching by city name
+//Error handling if city is unrecognised by API
+function getDeetsCity(city) {
+  let citySearch = city;
+  let apiKey = "d4005dcd287a291e84d25dc6afec0b1c";
+  let units = "metric";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${citySearch}&units=${units}&appid=${apiKey}`;
+  
+    //Included as in training ids but not recognised when run so commented out
+    //const axios = require("axios").default;
+  
+  
+   fetch(apiUrl)
+   .then(function (response) {
+      if(!response.ok) {
+        throw Error(`City ${response.statusText}`);
+   } else {
+     axios.get(apiUrl).then(displayDeets);
+     axios.get(apiUrl).then(getLatLong);
+   };
+  })
+   .catch(function(err) {
+     console.log(err);
+     alert(`City not found, please try again.`);
+   });
+}
+////////////////////////////NEW FUNCTION///////////////////////////////////////
+
+//Getting lat and long from city search current weather api to pass to future forecast api
+function getLatLong(apiCall) {
+  let apiLatLong = apiCall;
+  console.log(apiLatLong);
+  let latitude = apiLatLong.data.coord.lat;
+  let longitude = apiLatLong.data.coord.lon;
+  let apiKey = "d4005dcd287a291e84d25dc6afec0b1c";
+  let units = "metric";
+  let futureApiUrl =  `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=current,minutely,hourly,alerts&units=${units}&appid=${apiKey}`;
+
+fetch(futureApiUrl)
+   .then(function (response) {
+      if(!response.ok) {
+        throw Error(`City ${response.statusText}`);
+   } else {
+     axios.get(futureApiUrl).then(displayDeetsFuture);
+    };
+  })
+   .catch(function(err) {
+     console.log(err);
+     alert(`City not found, please try again.`);
+   });
+
+}
+
+
+
+
+
+
+
+////////////////////////UPDATING DETAILS ON SCREEN////////////////////////////
+
+////////////////////////////NEW FUNCTION///////////////////////////////////////
+//Updating the details displayed on the page including images for current weather
 function displayDeets(apiCall) {
   let getTemp = apiCall;
   console.log(getTemp);
@@ -47,69 +265,69 @@ function displayDeets(apiCall) {
   let newMornAft = "AM";
 
 
-//Working out correct ending for utc date based on numeric value
-//(defaults to "th" this updates where needed)
-if (newDateNow === 1 || newDateNow === 21 || newDateNow === 31) {
-  newDateApend = "st";
-} else {
-  if (newDateNow === 2 || newDateNow === 22) {
-    newDateApend = "nd";
+  //Working out correct ending for utc date based on numeric value
+  //(defaults to "th" this updates where needed)
+  if (newDateNow === 1 || newDateNow === 21 || newDateNow === 31) {
+    newDateApend = "st";
   } else {
-    if (newDateNow === 3 || newDateNow === 22) {
-      newDateApend = "rd";
+    if (newDateNow === 2 || newDateNow === 22) {
+      newDateApend = "nd";
+    } else {
+      if (newDateNow === 3 || newDateNow === 22) {
+        newDateApend = "rd";
+      }
     }
   }
-}
 
 
-//Check if afternoon
-if (newHour >= 12) {
-  newMornAft = "PM";
-}
+  //Check if afternoon
+  if (newHour >= 12) {
+    newMornAft = "PM";
+  }
 
 
-//array of days to be used to convert API numeric val to words
-let days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wesnesday",
-  "Thursday",
-  "Friday",
-  "Saturday"
-];
-newDay = days[newDay];
+  //array of days to be used to convert API numeric val to words
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wesnesday",
+   "Thursday",
+   "Friday",
+   "Saturday"
+  ];
+  newDay = days[newDay];
 
-//array of months to be used to convert API numeric val to words
-let months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
-newMonth = months[newMonth];
+  //array of months to be used to convert API numeric val to words
+  let months = [
+   "January",
+   "February",
+   "March",
+   "April",
+   "May",
+   "June",
+   "July",
+   "August",
+   "September",
+   "October",
+   "November",
+   "December"
+  ];
+  newMonth = months[newMonth];
 
 
-// formatting for time stamp so mins < 10 start with 0
-if (newMins < 10) {
-  newMins = `0${newMins}`;
-};
+  // formatting for time stamp so mins < 10 start with 0
+  if (newMins < 10) {
+    newMins = `0${newMins}`;
+  };
 
 
   //updating city name
-  let h1 = document.querySelector("h1");
-  h1.innerHTML = `${cityName}, ${country}`;
+    let h1 = document.querySelector("h1");
+    h1.innerHTML = `${cityName}, ${country}`;
 
-let newDateField = document.querySelector("#current-date-time");
-newDateField.innerHTML = `${newDay} ${newDateNow}${newDateApend} ${newMonth} ${newYear} ${newHour}:${newMins}${newMornAft}`;
+  let newDateField = document.querySelector("#current-date-time");
+  newDateField.innerHTML = `${newDay} ${newDateNow}${newDateApend} ${newMonth} ${newYear} ${newHour}:${newMins}${newMornAft}`;
 
   //updating details
   let weatherCurrentTemp = document.querySelector(".temp");
@@ -125,168 +343,162 @@ newDateField.innerHTML = `${newDay} ${newDateNow}${newDateApend} ${newMonth} ${n
   let backgroundVid = document.querySelector("video");
   backgroundVid.src = `media/${weatherCode}-vid.mp4`;
   let currentWeatherImg = document.querySelector("#current-weather-img");
-  let currentWeatherImgNew = "fa-cloud-sun-rain";
+  let currentWeatherImgNew = weatherIcon(weatherCode);
 
-  switch (weatherCode) {
-    case "01d":
-        currentWeatherImgNew = "fa-sun";
-        break;
-    case "02d":
-        currentWeatherImgNew = "fa-cloud-sun";
-        break;
-    case "03d":
-        currentWeatherImgNew = "fa-cloud";
-        break;
-    case "04d":
-        currentWeatherImgNew = "fa-cloud";
-        break;
-    case "09d":
-        currentWeatherImgNew = "fa-cloud-showers-heavy";
-        break;
-    case "10d":
-        currentWeatherImgNew = "fa-cloud-showers-heavy";
-        break;
-    case "11d":
-        currentWeatherImgNew = "fa-bolt";
-        break;
-    case "13d":
-        currentWeatherImgNew = "fa-snowflake";
-        break;
-    case "50d":
-        currentWeatherImgNew = "fa-smog";
-        break;
-    default: 
-        currentWeatherImgNew = "fa-cloud-sun-rain";
-  }
-currentWeatherImg.classList.replace(currentWeatherImg.className.substr(4, currentWeatherImg.className.length), currentWeatherImgNew);
+  currentWeatherImg.classList.replace(currentWeatherImg.className.substr(4, currentWeatherImg.className.length), currentWeatherImgNew);
 }
-
-
-
-//Processes API call when searching by currentlocation lat/long
-//Error handling if city is unrecognised by API
-function getDeets(lat, long) {
-  let latitude = lat;
-  let longitude = long;
-  let apiKey = "d4005dcd287a291e84d25dc6afec0b1c";
-  let units = "metric";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`;
-  //Included as in training ids but not recognised when run so commented out
-  //const axios = require("axios").default;
-
-fetch(apiUrl)
-   .then(function (response) {
-      if(!response.ok) {
-        throw Error(`City ${response.statusText}`);
-   } else {
-     axios.get(apiUrl).then(displayDeets);
-   };
-  })
-   .catch(function(err) {
-     console.log(err);
-     alert(`City not found, please try again.`);
-   });
-}
-
-
-//Processes API call when searching by city name
-//Error handling if city is unrecognised by API
-function getDeetsCity(city) {
-  let citySearch = city;
-  let apiKey = "d4005dcd287a291e84d25dc6afec0b1c";
-  let units = "metric";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${citySearch}&units=${units}&appid=${apiKey}`;
-  //Included as in training ids but not recognised when run so commented out
-  //const axios = require("axios").default;
+////////////////////////////NEW FUNCTION///////////////////////////////////////
+//Future forecast details update
+function displayDeetsFuture(apiCall) {
+  let getFutureTemp = apiCall;
+  console.log(getFutureTemp);
   
-  
-   fetch(apiUrl)
-   .then(function (response) {
-      if(!response.ok) {
-        throw Error(`City ${response.statusText}`);
-   } else {
-     axios.get(apiUrl).then(displayDeets);
-   };
-  })
-   .catch(function(err) {
-     console.log(err);
-     alert(`City not found, please try again.`);
-   });
-}
+ //Current Day
+  let dateTimeNow = new Date();
+  let currentDay = dateTimeNow.getDay();
 
-
-
-//Gets latitude and longitude of current location of user
-function currentLocation(response) {
-  let lat = response.coords.latitude;
-  let long = response.coords.longitude;
-  console.log(response);
-
-  getDeets(lat, long);
-}
-
-
-
-//Search engine - search button event to search
-function searchEngine(event) {
-  event.preventDefault();
-
-  let cityInput = document.querySelector("#city-input").value;
-  
-  if (cityInput === "") {
-    alert("Please enter a city or place name.");
-  } else {
-  let cityInputProper = properCase(cityInput);
-
-  //let h1City = document.querySelector("#h1-city-name");
-  //h1City.innerHTML = `${cityInputProper}`;
-
-  let cityInputApi = cityInput.replace(" ", "+");
-
-  getDeetsCity(cityInputApi);
-
-  document.querySelector("#city-input").value = "";
+  //Day1 Forecast
+  let day1DayNo = currentDay + 1;
+  if(day1DayNo > 6) {
+    day1DayNo === day1DayNo - 7;
   };
-}
+  console.log(day1DayNo);
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wesnesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+  day1DayWord = days[day1DayNo];
+  console.log(day1DayWord);
 
+  let day1Title = document.querySelector("#day-1-title");
+  day1Title.innerHTML = day1DayWord;
 
+  let day1WeatherImg = document.querySelector("#day-1-img");
+  let weatherCode = getFutureTemp.data.daily[0].weather[0].icon;
+  let weatherImgDay1 = weatherIcon(weatherCode);
+  day1WeatherImg.classList.replace(day1WeatherImg.className.substr(4, day1WeatherImg.className.length), weatherImgDay1);
 
-//Search engine - enter key event to search
-  function searchEngineEnter(event) {
+  console.log(weatherCode);
+  console.log(weatherImgDay1);
 
-  switch (event.key) {
-    case "Enter":
+  let day1MaxField = document.querySelector("#day-1-max-min");
+  let day1MaxTemp = Math.round(getFutureTemp.data.daily[0].temp.max);
+  let day1MinTemp = Math.round(getFutureTemp.data.daily[0].temp.min);
+  day1MaxField.innerHTML = `${day1MinTemp}°C/${day1MaxTemp}°C`
 
-  let cityInput = document.querySelector("#city-input").value;
-  if (cityInput === "") {
-    alert("Please enter a city or place name.");
-  } else {
-  let cityInputProper = properCase(cityInput);
-
-  //let h1City = document.querySelector("#h1-city-name");
-  //h1City.innerHTML = `${cityInputProper}`;
-
-  let cityInputApi = cityInput.replace(" ", "+");
-
-  getDeetsCity(cityInputApi);
-
-  document.querySelector("#city-input").value = "";
+  //Day2 Forecast
+  let day2DayNo = currentDay + 2;
+  if(day2DayNo > 6) {
+    day2DayNo === day2DayNo -7;
   };
-  break;
+  console.log(day2DayNo);
+  day2DayWord = days[day2DayNo];
+  console.log(day2DayWord);
 
-  default:
-    return;
-    };
-    event.preventDefault();
+  let day2Title = document.querySelector("#day-2-title");
+  day2Title.innerHTML = day2DayWord;
+
+  let day2WeatherImg = document.querySelector("#day-2-img");
+  weatherCode = getFutureTemp.data.daily[1].weather[0].icon;
+  let weatherImgDay2 = weatherIcon(weatherCode);
+  day2WeatherImg.classList.replace(day2WeatherImg.className.substr(4, day2WeatherImg.className.length), weatherImgDay2);
+
+  console.log(weatherCode);
+  console.log(weatherImgDay2);
+
+  let day2MaxField = document.querySelector("#day-2-max-min");
+  let day2MaxTemp = Math.round(getFutureTemp.data.daily[1].temp.max);
+  let day2MinTemp = Math.round(getFutureTemp.data.daily[1].temp.min);
+  day2MaxField.innerHTML = `${day2MinTemp}°C/${day2MaxTemp}°C`
+
+
+  //Day3 Forecast
+  let day3DayNo = currentDay + 3;
+  if(day3DayNo > 6) {
+    day3DayNo === day3DayNo - 7;
+  };
+  console.log(day3DayNo);
+  day3DayWord = days[day3DayNo];
+  console.log(day3DayWord);
+
+  let day3Title = document.querySelector("#day-3-title");
+  day3Title.innerHTML = day3DayWord;
+
+  let day3WeatherImg = document.querySelector("#day-3-img");
+  weatherCode = getFutureTemp.data.daily[2].weather[0].icon;
+  let weatherImgDay3 = weatherIcon(weatherCode);
+  day3WeatherImg.classList.replace(day3WeatherImg.className.substr(4, day3WeatherImg.className.length), weatherImgDay3);
+
+  console.log(weatherCode);
+  console.log(weatherImgDay3);
+
+  let day3MaxField = document.querySelector("#day-3-max-min");
+  let day3MaxTemp = Math.round(getFutureTemp.data.daily[2].temp.max);
+  let day3MinTemp = Math.round(getFutureTemp.data.daily[2].temp.min);
+  day3MaxField.innerHTML = `${day3MinTemp}°C/${day3MaxTemp}°C`
+
+  //Day4 Forecast
+  let day4DayNo = currentDay + 4;
+  if(day4DayNo > 6) {
+    day4DayNo === day4DayNo - 7;
+  };
+  console.log(day4DayNo);
+  day4DayWord = days[day4DayNo];
+  console.log(day4DayWord);
+
+  let day4Title = document.querySelector("#day-4-title");
+  day4Title.innerHTML = day4DayWord;
+
+  let day4WeatherImg = document.querySelector("#day-4-img");
+  weatherCode = getFutureTemp.data.daily[3].weather[0].icon;
+  let weatherImgDay4 = weatherIcon(weatherCode);
+  day4WeatherImg.classList.replace(day4WeatherImg.className.substr(4, day4WeatherImg.className.length), weatherImgDay4);
+
+  console.log(weatherCode);
+  console.log(weatherImgDay4);
+
+  let day4MaxField = document.querySelector("#day-4-max-min");
+  let day4MaxTemp = Math.round(getFutureTemp.data.daily[3].temp.max);
+  let day4MinTemp = Math.round(getFutureTemp.data.daily[3].temp.min);
+  day4MaxField.innerHTML = `${day4MinTemp}°C/${day4MaxTemp}°C`
+
+//Day5 Forecast
+  let day5DayNo = currentDay + 5;
+  if(day5DayNo > 6) {
+    day5DayNo === day5DayNo - 7;
+  };
+  console.log(day5DayNo);
+  day5DayWord = days[day5DayNo];
+  console.log(day5DayWord);
+
+  let day5Title = document.querySelector("#day-5-title");
+  day5Title.innerHTML = day5DayWord;
+
+  let day5WeatherImg = document.querySelector("#day-5-img");
+  weatherCode = getFutureTemp.data.daily[4].weather[0].icon;
+  let weatherImgDay5 = weatherIcon(weatherCode);
+  day5WeatherImg.classList.replace(day5WeatherImg.className.substr(4, day5WeatherImg.className.length), weatherImgDay5);
+
+  console.log(weatherCode);
+  console.log(weatherImgDay5);
+
+  let day5MaxField = document.querySelector("#day-5-max-min");
+  let day5MaxTemp = Math.round(getFutureTemp.data.daily[4].temp.max);
+  let day5MinTemp = Math.round(getFutureTemp.data.daily[4].temp.min);
+  day5MaxField.innerHTML = `${day5MinTemp}°C/${day5MaxTemp}°C`
+
+
 }
 
-function currGeoLoc(event) {
-  event.preventDefault();
 
-  navigator.geolocation.getCurrentPosition(currentLocation);
 
-}
-
+/////////////////////UPDATING TEMPERATURES/////////////////////////////////////
+////////////////////////////NEW FUNCTION///////////////////////////////////////
 function measureChangeFar() {
   
   let centigradeSelect = document.querySelector("#centigrade-select");
@@ -313,6 +525,7 @@ function measureChangeFar() {
   let weatherTempFeelsFar = document.querySelector(".feels");
   weatherTempFeelsFar.innerHTML = `Feels like: ${currentTempFeels}°F`;
 }
+////////////////////////////NEW FUNCTION///////////////////////////////////////
 function measureChangeCel() {
 
   let centigradeSelect = document.querySelector("#centigrade-select");
@@ -343,6 +556,12 @@ function measureChangeCel() {
 
 
 
+
+
+
+
+/////////////////////////PAGE SETUP DETAILS//////////////////////////////////////
+
 //Getting and formatting details based on user's system info
 let dateTimeNow = new Date();
 let day = dateTimeNow.getDay();
@@ -354,8 +573,6 @@ let month = dateTimeNow.getMonth();
 let dateApend = "th";
 let mornAft = "AM";
  
-
-
 //Working out correct ending for date based on numeric value
 //(defaults to "th" this updates where needed)
 if (dateNow === 1 || dateNow === 21 || dateNow === 31) {
@@ -370,12 +587,10 @@ if (dateNow === 1 || dateNow === 21 || dateNow === 31) {
   }
 }
 
-
 //Check if afternoon
 if (hour >= 12) {
   mornAft = "PM";
 }
-
 
 //array of days to be used to convert API numeric val to words
 let days = [
@@ -406,14 +621,13 @@ let months = [
 ];
 month = months[month];
 
-
 // formatting for time stamp so mins < 10 start with 0
 if (mins < 10) {
   mins = `0${mins}`;
 };
 
 
-
+////////////////////////////NEW PROCESSES///////////////////////////////////////
 //Event listeners for load, enter on search, click search, click current location,
 // change to farenheit, change to celsius
 window.addEventListener("load", currGeoLoc);
