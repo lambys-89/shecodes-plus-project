@@ -32,6 +32,41 @@ function displayDeets(apiCall) {
   weatherCurrentWind.innerHTML = `Wind speed: ${wind}mph`;
   let backgroundVid = document.querySelector("video");
   backgroundVid.src = `media/${weatherCode}-vid.mp4`;
+  let currentWeatherImg = document.querySelector("#current-weather-img");
+  let currentWeatherImgNew = "fa-cloud-sun-rain";
+
+  switch (weatherCode) {
+    case "01d":
+        currentWeatherImgNew = "fa-sun";
+        break;
+    case "02d":
+        currentWeatherImgNew = "fa-cloud-sun";
+        break;
+    case "03d":
+        currentWeatherImgNew = "fa-cloud";
+        break;
+    case "04d":
+        currentWeatherImgNew = "fa-cloud";
+        break;
+    case "09d":
+        currentWeatherImgNew = "fa-cloud-showers-heavy";
+        break;
+    case "10d":
+        currentWeatherImgNew = "fa-cloud-showers-heavy";
+        break;
+    case "11d":
+        currentWeatherImgNew = "fa-bolt";
+        break;
+    case "13d":
+        currentWeatherImgNew = "fa-snowflake";
+        break;
+    case "50d":
+        currentWeatherImgNew = "fa-smog";
+        break;
+    default: 
+        currentWeatherImgNew = "fa-cloud-sun-rain";
+  }
+currentWeatherImg.classList.replace(currentWeatherImg.className.substr(4, currentWeatherImg.className.length), currentWeatherImgNew);
 }
 
 function getDeets(lat, long) {
