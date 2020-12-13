@@ -131,7 +131,6 @@ function searchEngine(event) {
 function currentLocation(response) {
   let lat = response.coords.latitude;
   let long = response.coords.longitude;
-  console.log(response);
 
   getDeets(lat, long);
 }
@@ -159,7 +158,6 @@ fetch(apiUrl)
    };
   })
    .catch(function(err) {
-     console.log(err);
      alert(`City not found, please try again.`);
    });
 }
@@ -186,7 +184,6 @@ function getDeetsCity(city) {
    };
   })
    .catch(function(err) {
-     console.log(err);
      alert(`City not found, please try again.`);
    });
 }
@@ -195,7 +192,6 @@ function getDeetsCity(city) {
 //Getting lat and long from city search current weather api to pass to future forecast api
 function getLatLong(apiCall) {
   let apiLatLong = apiCall;
-  console.log(apiLatLong);
   let latitude = apiLatLong.data.coord.lat;
   let longitude = apiLatLong.data.coord.lon;
   let apiKey = "d4005dcd287a291e84d25dc6afec0b1c";
@@ -211,7 +207,6 @@ fetch(futureApiUrl)
     };
   })
    .catch(function(err) {
-     console.log(err);
      alert(`City not found, please try again.`);
    });
 
@@ -229,7 +224,6 @@ fetch(futureApiUrl)
 //Updating the details displayed on the page including images for current weather
 function displayDeets(apiCall) {
   let getTemp = apiCall;
-  console.log(getTemp);
   let country = getTemp.data.sys.country;
   let temp = Math.round(getTemp.data.main.temp);
   let descriptionCurrent = properCase(getTemp.data.weather[0].description);
@@ -257,7 +251,6 @@ function displayDeets(apiCall) {
 
   //updating timestamp
   let timezone = getTemp.data.timezone;
-  console.log(timezone);
 
   Date.prototype.addSecs = function(s) {
     this.setTime(this.getTime() + (s * 1000));
@@ -266,7 +259,6 @@ function displayDeets(apiCall) {
 
   let newDate = new Date();
   newDate.addSecs(timezone);
-  console.log(newDate);
 
   let newDay = newDate.getDay();
   let newHour = newDate.getHours();
@@ -364,7 +356,6 @@ function displayDeets(apiCall) {
 //Future forecast details update
 function displayDeetsFuture(apiCall) {
   let getFutureTemp = apiCall;
-  console.log(getFutureTemp);
   
  //Current Day
   let dateTimeNow = new Date();
@@ -375,7 +366,6 @@ function displayDeetsFuture(apiCall) {
   if(day1DayNo > 6) {
     day1DayNo === day1DayNo - 7;
   };
-  console.log(day1DayNo);
   let days = [
     "Sunday",
     "Monday",
@@ -386,7 +376,6 @@ function displayDeetsFuture(apiCall) {
     "Saturday"
   ];
   day1DayWord = days[day1DayNo];
-  console.log(day1DayWord);
 
   let day1Title = document.querySelector("#day-1-title");
   day1Title.innerHTML = day1DayWord;
@@ -395,9 +384,6 @@ function displayDeetsFuture(apiCall) {
   let weatherCode = getFutureTemp.data.daily[0].weather[0].icon;
   let weatherImgDay1 = weatherIcon(weatherCode);
   day1WeatherImg.classList.replace(day1WeatherImg.className.substr(4, day1WeatherImg.className.length), weatherImgDay1);
-
-  console.log(weatherCode);
-  console.log(weatherImgDay1);
 
   let day1MaxField = document.querySelector("#day-1-max-min");
   let day1MaxTemp = Math.round(getFutureTemp.data.daily[0].temp.max);
@@ -409,9 +395,7 @@ function displayDeetsFuture(apiCall) {
   if(day2DayNo > 6) {
     day2DayNo === day2DayNo -7;
   };
-  console.log(day2DayNo);
   day2DayWord = days[day2DayNo];
-  console.log(day2DayWord);
 
   let day2Title = document.querySelector("#day-2-title");
   day2Title.innerHTML = day2DayWord;
@@ -420,9 +404,6 @@ function displayDeetsFuture(apiCall) {
   weatherCode = getFutureTemp.data.daily[1].weather[0].icon;
   let weatherImgDay2 = weatherIcon(weatherCode);
   day2WeatherImg.classList.replace(day2WeatherImg.className.substr(4, day2WeatherImg.className.length), weatherImgDay2);
-
-  console.log(weatherCode);
-  console.log(weatherImgDay2);
 
   let day2MaxField = document.querySelector("#day-2-max-min");
   let day2MaxTemp = Math.round(getFutureTemp.data.daily[1].temp.max);
@@ -435,9 +416,7 @@ function displayDeetsFuture(apiCall) {
   if(day3DayNo > 6) {
     day3DayNo === day3DayNo - 7;
   };
-  console.log(day3DayNo);
   day3DayWord = days[day3DayNo];
-  console.log(day3DayWord);
 
   let day3Title = document.querySelector("#day-3-title");
   day3Title.innerHTML = day3DayWord;
@@ -446,9 +425,6 @@ function displayDeetsFuture(apiCall) {
   weatherCode = getFutureTemp.data.daily[2].weather[0].icon;
   let weatherImgDay3 = weatherIcon(weatherCode);
   day3WeatherImg.classList.replace(day3WeatherImg.className.substr(4, day3WeatherImg.className.length), weatherImgDay3);
-
-  console.log(weatherCode);
-  console.log(weatherImgDay3);
 
   let day3MaxField = document.querySelector("#day-3-max-min");
   let day3MaxTemp = Math.round(getFutureTemp.data.daily[2].temp.max);
@@ -460,9 +436,7 @@ function displayDeetsFuture(apiCall) {
   if(day4DayNo > 6) {
     day4DayNo === day4DayNo - 7;
   };
-  console.log(day4DayNo);
   day4DayWord = days[day4DayNo];
-  console.log(day4DayWord);
 
   let day4Title = document.querySelector("#day-4-title");
   day4Title.innerHTML = day4DayWord;
@@ -471,9 +445,6 @@ function displayDeetsFuture(apiCall) {
   weatherCode = getFutureTemp.data.daily[3].weather[0].icon;
   let weatherImgDay4 = weatherIcon(weatherCode);
   day4WeatherImg.classList.replace(day4WeatherImg.className.substr(4, day4WeatherImg.className.length), weatherImgDay4);
-
-  console.log(weatherCode);
-  console.log(weatherImgDay4);
 
   let day4MaxField = document.querySelector("#day-4-max-min");
   let day4MaxTemp = Math.round(getFutureTemp.data.daily[3].temp.max);
@@ -485,9 +456,7 @@ function displayDeetsFuture(apiCall) {
   if(day5DayNo > 6) {
     day5DayNo === day5DayNo - 7;
   };
-  console.log(day5DayNo);
   day5DayWord = days[day5DayNo];
-  console.log(day5DayWord);
 
   let day5Title = document.querySelector("#day-5-title");
   day5Title.innerHTML = day5DayWord;
@@ -496,9 +465,6 @@ function displayDeetsFuture(apiCall) {
   weatherCode = getFutureTemp.data.daily[4].weather[0].icon;
   let weatherImgDay5 = weatherIcon(weatherCode);
   day5WeatherImg.classList.replace(day5WeatherImg.className.substr(4, day5WeatherImg.className.length), weatherImgDay5);
-
-  console.log(weatherCode);
-  console.log(weatherImgDay5);
 
   let day5MaxField = document.querySelector("#day-5-max-min");
   let day5MaxTemp = Math.round(getFutureTemp.data.daily[4].temp.max);
@@ -540,7 +506,6 @@ function measureChangeFar() {
 
   //Day 1 forecast to farenheit
   let day1TempDesc = document.querySelector("#day-1-max-min").innerHTML;
-  console.log(day1TempDesc);
   let slashLoc = day1TempDesc.search("/");
 
   let day1Min = day1TempDesc.substr(0, slashLoc-2);
@@ -633,7 +598,6 @@ function measureChangeCel() {
 
     //Day 1 forecast to celsius
   let day1TempDesc = document.querySelector("#day-1-max-min").innerHTML;
-  console.log(day1TempDesc);
   let slashLoc = day1TempDesc.search("/");
 
   let day1Min = day1TempDesc.substr(0, slashLoc-2);
