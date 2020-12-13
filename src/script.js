@@ -370,7 +370,7 @@ function displayDeetsFuture(apiCall) {
     "Sunday",
     "Monday",
     "Tuesday",
-    "Wesnesday",
+    "Wednesday",
     "Thursday",
     "Friday",
     "Saturday"
