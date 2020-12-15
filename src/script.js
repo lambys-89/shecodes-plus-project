@@ -364,7 +364,7 @@ function displayDeetsFuture(apiCall) {
   //Day1 Forecast
   let day1DayNo = currentDay + 1;
   if(day1DayNo > 6) {
-    day1DayNo === day1DayNo - 7;
+    day1DayNo = day1DayNo - 7;
   };
   let days = [
     "Sunday",
@@ -393,7 +393,7 @@ function displayDeetsFuture(apiCall) {
   //Day2 Forecast
   let day2DayNo = currentDay + 2;
   if(day2DayNo > 6) {
-    day2DayNo === day2DayNo -7;
+    day2DayNo = day2DayNo -7;
   };
   day2DayWord = days[day2DayNo];
 
@@ -414,7 +414,7 @@ function displayDeetsFuture(apiCall) {
   //Day3 Forecast
   let day3DayNo = currentDay + 3;
   if(day3DayNo > 6) {
-    day3DayNo === day3DayNo - 7;
+    day3DayNo = day3DayNo - 7;
   };
   day3DayWord = days[day3DayNo];
 
@@ -434,7 +434,7 @@ function displayDeetsFuture(apiCall) {
   //Day4 Forecast
   let day4DayNo = currentDay + 4;
   if(day4DayNo > 6) {
-    day4DayNo === day4DayNo - 7;
+    day4DayNo = day4DayNo - 7;
   };
   day4DayWord = days[day4DayNo];
 
@@ -454,7 +454,7 @@ function displayDeetsFuture(apiCall) {
 //Day5 Forecast
   let day5DayNo = currentDay + 5;
   if(day5DayNo > 6) {
-    day5DayNo === day5DayNo - 7;
+    day5DayNo = day5DayNo - 7;
   };
   day5DayWord = days[day5DayNo];
 
