@@ -47,6 +47,11 @@ input#city-input.form-control.city-search:focus {
   outline: none !important;
   border: 1px solid black !important;
   box-shadow: 0 0 1px black !important;
+  height: 43px !important;
+}
+
+input#city-input.form-control.city-search {
+  height: 43px !important;
 }
 
 #current-weather-img {
@@ -69,6 +74,7 @@ input#city-input.form-control.city-search:focus {
 
 .card {
   background-color: rgba(108, 110, 112, 0.85) !important;
+  min-width: unset !important;
 }
 
 button.btn-primary,
@@ -76,6 +82,7 @@ label.btn-secondary {
   color: Black;
   background-color: #ced4da;
   border: 1px solid black;
+  height: 43px !important;
 }
 
 button.btn-primary:hover,
@@ -83,6 +90,7 @@ label.btn-secondary:hover {
   color: Black;
   background-color: transparent;
   border: 1px solid black;
+  height: 43px !important;
 }
 
 button.btn-primary:focus {
@@ -90,6 +98,7 @@ button.btn-primary:focus {
   background-color: transparent !important;
   border: 1px solid #ced4da !important;
   box-shadow: none !important;
+  height: 43px !important;
 }
 
 h1 {
@@ -171,4 +180,9 @@ p {
 a {
   color: black !important;
   text-decoration: underline !important;
+}
+
+.col-sm-2 {
+  text-align: right;
+  padding-right: 30px !important;
 }
